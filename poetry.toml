@@ -4,7 +4,7 @@ version = "0.1.0"
 description = "Alohomora manages our secret distribution"
 
 # Compatibe Python versions
-python = ["~2.7", "^3.5"]
+python = ["^3.6"]
 
 license = "MIT"
 
@@ -32,15 +32,13 @@ documentation = "https://github.com/razorpay/alohomora"
 keywords = ["credstash", "ansible", "secrets", "jinja"]
 
 # A list of patterns that will be included in the final package.
-# Python packages, modules and package data will be automatically detected
-include = ['src/**/*', 'LICENSE.txt']
 
 # If you packages lies elsewhere (like in a src directory),
 # you can tell poet to find them from there:
 # include = { from = 'src', include = '**/*' }
 #
 # Similarly, you can tell that the src directory represent the foo package:
-# include = { from = 'src', include = '**/*', as = 'foo' }
+include = ['alohomora/*']
 
 # Features are sets of optional dependencies, which enhance a package,
 # but are not required
@@ -68,5 +66,5 @@ jinja = "~2.9"
 # They must follow the following convention:
 # {script_name} = "{my.package:executable}"
 #
-[scripts]
-alohomora = 'alohomora:app.run'
+# [scripts]
+# alohomora = 'alohomora:app.run'

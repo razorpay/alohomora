@@ -1,28 +1,13 @@
 # {{ ansible_managed }}
-
-AWS_REGION       = ap-south-1
-
-AWS_QUEUE_URL    = https://sqs.ap-south-1.amazonaws.com/1493822699/{{ env }}-birdie
-
-DB_DATABASE      = {{ env }}-birdie
-DB_USERNAME      = {{ env }}-birdie
-
+ENV={{env}}
 {% if env == 'beta' %}
-
 APP_KEY          = {{ lookup('credstash', 'birdie_beta_app_key' , region='ap-south-1') }}
-
 DB_HOST          = beta.db.website.vpc
 DB_PASSWORD      = {{ lookup('credstash', 'birdie_beta_db_password' , region='ap-south-1') }}
-
 APP_API_SECRET   = {{ lookup('credstash', 'birdie_beta_secret', region='ap-south-1')  }}
-
 {% elif env == 'prod' %}
-
 APP_KEY          = {{ lookup('credstash', 'birdie_prod_app_key', region='ap-south-1')  }}
-
 DB_HOST          = prod-common.db.website.vpc
 DB_PASSWORD      = {{ lookup('credstash', 'birdie_prod_db_password', region='ap-south-1')  }}
-
 APP_API_SECRET   = {{ lookup('credstash', 'birdie_prod_secret', region='ap-south-1')  }}
-
 {% endif %}
