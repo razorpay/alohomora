@@ -16,18 +16,15 @@ def create(region, env, default_table, app):
 
 @click.option('--region', default='us-east-1', help='AWS region')
 @click.option('--env', default='prod', help='environment for the application, used for namespacing')
-@click.argument('secret')
 @click.argument('key')
 @click.argument('app')
 @cli.command('store', short_help='Store a secret for an application')
-def store(region, env, app, key, secret):
+def store(region, env, app, key):
     table_name = f"credstash-{env}-{app}"
-    args = type("", (), {})()
-    args.autoversion = True
-    args.credential  = key
-    args.table       = table_name
-    args.region      = region
-    putSecretAction(args, region)
+    click.echo("Please run the following command")
+    # This is a hack because credstash does not allow us to easily autoversion
+    # TODO: Use putSecret and echo the CLI version if that fails
+    click.echo(f"credstash -r {region} -t {table_name} put -a {key} [secret]")
 
 @click.option('--region', default='eu-west-1', help='AWS region')
 @click.option('--app', help='application name, used for table name as well')
