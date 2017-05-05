@@ -1,6 +1,6 @@
 from jinja2 import Environment, select_autoescape
 import json
-from credstash import listSecrets, DEFAULT_REGION
+import credstash
 
 GLOBALS = {
     'alohomora_managed': "This file is managed by Alohomora",
@@ -18,6 +18,15 @@ class MockStash:
         }
 
 
+class CredStash:
+    """Actual Credstash class wrapper"""
+
+    def listSecrets(self, table='credential-store'):
+        return credstash.getAllSecrets(
+            table=table
+        )
+
+
 class Alohomora:
     """Alohomora unlocks secrets"""
 
@@ -27,7 +36,7 @@ class Alohomora:
         if mock:
             self.stash = MockStash()
         else:
-            self.stash = Credstash()
+            self.stash = CredStash()
 
         self.secrets = self.stash.listSecrets(
             self.make_table_name())
