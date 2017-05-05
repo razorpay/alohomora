@@ -41,6 +41,10 @@ class Alohomora:
             # it must match the table we are using
             if 'table' in args:
                 if args['table'] == self.make_table_name():
+                    if key in self.secrets:
+                        return self.secrets[key]
+                    else:
+                        return 'alohomora'
                     pass
                 else:
                     # We really don't have a fallback here
