@@ -39,3 +39,24 @@ Alohomora expects the secrets for any application to be stored in a table called
 8. Overwrite the file with the new one if _everything looks cool_.
 
 This project uses poet for managing dependencies.
+
+
+## Configuration?
+
+Alohomora is designed to be a zero-config solution.
+That makes sense, because you are supposed to use alohomora to fetch the secrets.
+
+Alohomora is coupled (as of now) with AWS-CodeDeploy and assumes the existence of the
+following environment variables:
+
+|Name|Description|Value|
+|----|-----------|-----|
+|APPLICATION_NAME|This variable contains the name of the application being deployed. This is the name the user sets in the console or AWS CLI.|This is passed to the template and elsewhere as the `app` variable|
+|DEPLOYMENT_GROUP_NAME|This variable contains the name of the deployment group. A deployment group is a set of instances associated with an application that you target for a deployment.|This is expected to be the same as the environment name.|
+
+We perform a few transforms:
+
+- Change both `app` and `env` to lowercase
+- Replace `production` with `prod` in the `env` name
+
+
