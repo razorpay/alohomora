@@ -3,6 +3,7 @@ import json
 import credstash
 import click
 import botocore.exceptions
+import os.path
 
 GLOBALS = {
     'alohomora_managed': "This file is managed by Alohomora",
@@ -89,13 +90,32 @@ class Alohomora:
             raise Exception('Lookup failed')
 
     def cast(self, file):
+        vault_file = self.make_vault_file_name(file)
         variables = GLOBALS
         variables['env'] = self.env
         variables['lookup'] = self.lookup
         # This is the template variable
-        return Environment().from_string(
+        contents = Environment().from_string(
             source=open(file).read(), globals=variables
         ).render()
+
+        if os.path.isfile(vault_file):
+            """TODO: The file exists, we will output diff"""
+            msg = vault_file + " updated"
+            pass
+        else:
+            msg = vault_file + " created"
+
+        with open(vault_file, 'w') as f:
+            f.write(contents)
+
+        return(msg)
+
+    def make_vault_file_name(self, file):
+        if file[-3:] != '.j2':
+            raise Exception('File must be a valid j2 template')
+
+        return file[0:-3]
 
     def render(self, file):
         return self.cast(file)
