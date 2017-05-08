@@ -1,8 +1,0 @@
-getSecret(credential,
-   version,
-   region,
-   table,
-   context,
-   dynamodb,
-   kms,
-   **kwargs)
