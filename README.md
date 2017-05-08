@@ -30,7 +30,7 @@ The steps it follows are the following:
 Alohomora expects the secrets for any application to be stored in a table called `credstash-{env}-{app}`. The IAM roles for this table must be configured by you. Once you try to render a template, alohomora will do the following:
 
 1. Read the entire table and decrypt all secrets and cache them locally.
-5. If a local secret lookup uses the same table name, render it accordingly
+2. Render the template with these files and 2 extra variables: `env`, and `app` variables.
 7. Generate a diff report with any secrets that have been updated, and send it to a log file. The report should contain number of secrets updated, and their keys only.
 8. Overwrite the file with the new one if _everything looks cool_.
 
@@ -38,7 +38,7 @@ This project uses poet for managing dependencies.
 
 ## Configuration?
 
-Alohomora is designed to be a zero-config solution. That makes sense, because you are supposed to use alohomora to fetch the secrets.
+Alohomora is designed to be a zero-config solution. That makes sense, because you are supposed to use alohomora to fetch the actual configuration.
 
 Alohomora is coupled (as of now) with AWS-CodeDeploy and assumes the existence of the
 following environment variables:
