@@ -33,14 +33,22 @@ class Alohomora:
     """Alohomora unlocks secrets"""
 
     def __init__(self, env, app, region=credstash.DEFAULT_REGION, mock=False):
-        self.env = env
-        self.app = app
+        self.env = self.canonical_env(env)
+        self.app = self.canonical_app(app)
         if mock:
             self.stash = MockStash()
         else:
             self.stash = CredStash()
         self.region = region
         self.secrets = None
+
+    def canonical_env(self, env):
+        if env == 'Production':
+            env = 'prod'
+        return env.lower()
+
+    def canonical_app(self, app):
+        return app.lower()
 
     def cache_secrets(self):
         if self.secrets == None:
