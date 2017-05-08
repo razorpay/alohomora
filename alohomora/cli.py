@@ -1,3 +1,5 @@
+#!/usr/bin/env python3
+
 from credstash import createDdbTable, putSecretAction
 from alohomora import Alohomora
 import click

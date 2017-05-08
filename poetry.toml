@@ -67,4 +67,4 @@ jinja = "~2.9"
 # {script_name} = "{my.package:executable}"
 #
 # [scripts]
-# alohomora = 'alohomora:app.run'
+alohomora = 'alohomora:cli'
