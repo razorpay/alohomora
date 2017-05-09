@@ -1,8 +1,11 @@
+from __future__ import absolute_import
 from alohomora import Alohomora
-from configparser import ConfigParser
+import ConfigParser
+import StringIO
+from io import open
 
 
-class TestAlohomora:
+class TestAlohomora(object):
     """Alohomora cast and other tests"""
 
     def cast_and_read(self, spell):
@@ -11,8 +14,8 @@ class TestAlohomora:
         ini_contents = open('test/files/birdie').read()
         string_config = '[default]\n' + ini_contents
 
-        config = ConfigParser(allow_no_value=True)
-        config.read_string(string_config)
+        config = ConfigParser.ConfigParser(allow_no_value=True)
+        config.readfp(StringIO.StringIO(string_config))
 
         return config
 

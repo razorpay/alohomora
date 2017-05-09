@@ -1,16 +1,19 @@
+from __future__ import with_statement
+from __future__ import absolute_import
 from jinja2 import Environment, select_autoescape
 import json
 import credstash
 import click
 import botocore.exceptions
 import os.path
+from io import open
 
 GLOBALS = {
     'alohomora_managed': "This file is managed by Alohomora",
 }
 
 
-class MockStash:
+class MockStash(object):
     """Credstash mock class"""
 
     def listSecrets(self, table='credential-store'):
@@ -21,7 +24,7 @@ class MockStash:
         }
 
 
-class CredStash:
+class CredStash(object):
     """Actual Credstash class wrapper"""
 
     def listSecrets(self, table='credential-store'):
@@ -30,7 +33,7 @@ class CredStash:
         )
 
 
-class Alohomora:
+class Alohomora(object):
     """Alohomora unlocks secrets"""
 
     def __init__(self, env, app, region=credstash.DEFAULT_REGION, mock=False):

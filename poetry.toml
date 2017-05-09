@@ -4,7 +4,7 @@ version = "0.1.0"
 description = "Alohomora manages our secret distribution"
 
 # Compatibe Python versions
-python = ["^3.6"]
+python = ["^2.6"]
 
 license = "MIT"
 
@@ -53,7 +53,7 @@ include = ['alohomora/*']
 # pathlib2 = { version = "^2.2", python = "~2.7" }
 credstash = "~1.13.2"
 click = "~6.0.0"
-jinja = "~2.9"
+jinja2 = "~2.9"
 
 [dev-dependencies]
 # Development dependencies of the package
@@ -64,5 +64,5 @@ jinja = "~2.9"
 # They must follow the following convention:
 # {script_name} = "{my.package:executable}"
 #
-# [scripts]
+[scripts]
 alohomora = 'alohomora:cli'
