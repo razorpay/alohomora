@@ -25,6 +25,15 @@ class MockStash(object):
             'secret': 'fake_secret'
         }
 
+    def putSecret(self, table='credential-store',
+                  region=credstash.DEFAULT_REGION,
+                  name='mock_key',
+                  secret='mock_secret',
+                  kms_key='alias/credstash'):
+        return {
+            'msg': "{0} stored".format(secret),
+        }
+
 
 class CredStash(object):
     """Actual Credstash class wrapper"""
