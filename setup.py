@@ -6,7 +6,7 @@ def readme():
         return f.read()
 
 setup(name='razorpay.alohomora',
-      version='0.2',
+      version='0.1',
       description='Secret distribution tool, written as a wrapper on credstash',
       url='http://github.com/razorpay/alohomora',
       author='Team Razorpay',
