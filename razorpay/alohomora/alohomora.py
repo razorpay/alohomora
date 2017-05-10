@@ -61,13 +61,16 @@ class Alohomora(object):
         return app.lower()
 
     def cache_secrets(self):
-        if self.secrets == None:
+        if self.secrets is None:
             self.secrets = self.stash.listSecrets(
                 self.make_table_name(),
                 region=self.region)
 
     def make_table_name(self):
         return "credstash-{self.env}-{self.app}".format(**locals())
+
+    def make_kms_alias(self):
+        return "alias/credstash-{self.env}-{self.app}".format(**locals())
 
     def create_table(self):
         credstash.createDdbTable(
@@ -80,11 +83,12 @@ class Alohomora(object):
                                 region=self.region,
                                 name=key,
                                 secret=secret,
+                                kms_key=self.make_kms_alias(),
                                 )
             msg = "secret saved"
         except Exception as e:
-            if (e.response["Error"]["Code"]
-                    == "ConditionalCheckFailedException"):
+            if (e.response["Error"]["Code"] ==
+                    "ConditionalCheckFailedException"):
                 msg = ("store command failed\n"
                        "Please try the command: credstash -r {0}"
                        " -t {1} put -a {2} [secret]"
