@@ -1,5 +1,5 @@
 from __future__ import absolute_import
-from alohomora import Alohomora
+from razorpay.alohomora import Alohomora
 import ConfigParser
 import StringIO
 from io import open

@@ -2,7 +2,7 @@
 
 from __future__ import absolute_import
 from credstash import createDdbTable, putSecretAction
-from alohomora import Alohomora
+from razorpay.alohomora import Alohomora
 import click
 
 
