@@ -79,6 +79,7 @@ We perform a few transforms:
 
 -  Change both ``app`` and ``env`` to lowercase
 -  Replace ``production`` with ``prod`` in the ``env`` name
+-  Ignore anything after ``-`` in the environment. So ``beta-birdie`` becomes ``beta``
 
 Usage
 -----
