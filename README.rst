@@ -3,6 +3,14 @@ alohomora
 
 Razorpay's Secret Credential management system.
 
+Installation
+------------
+
+alohomora is distributed via PyPi:
+
+.. code:: shell
+    pip install razorpay.alohomora
+
 What?
 -----
 
