@@ -6,6 +6,7 @@ import credstash
 import click
 import botocore.exceptions
 import os.path
+import re
 from io import open
 
 GLOBALS = {
@@ -50,6 +51,8 @@ class Alohomora(object):
         self.secrets = None
 
     def canonical_env(self, env):
+        pattern = re.compile('^(\w+).*$')
+        env = pattern.findall(env)[0]
         if env == 'Production':
             env = 'prod'
         return env.lower()
