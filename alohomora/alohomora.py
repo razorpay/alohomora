@@ -16,7 +16,8 @@ GLOBALS = {
 class MockStash(object):
     """Credstash mock class"""
 
-    def listSecrets(self, table='credential-store'):
+    def listSecrets(self, table='credential-store',
+                    region=credstash.DEFAULT_REGION):
         return {
             'app_key': 'fake_app_key',
             'db_password': 'fake_db_password',
@@ -27,9 +28,11 @@ class MockStash(object):
 class CredStash(object):
     """Actual Credstash class wrapper"""
 
-    def listSecrets(self, table='credential-store'):
+    def listSecrets(self, table='credential-store',
+                    region=credstash.DEFAULT_REGION):
         return credstash.getAllSecrets(
-            table=table
+            table=table,
+            region=region
         )
 
 
@@ -57,7 +60,8 @@ class Alohomora(object):
     def cache_secrets(self):
         if self.secrets == None:
             self.secrets = self.stash.listSecrets(
-                self.make_table_name())
+                self.make_table_name(),
+                region=self.region)
 
     def make_table_name(self):
         return "credstash-{self.env}-{self.app}".format(**locals())
