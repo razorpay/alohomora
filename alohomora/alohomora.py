@@ -93,13 +93,13 @@ class Alohomora(object):
             raise Exception('Lookup failed')
 
     def cast(self, file):
-        vault_file = self.make_vault_file_name(file)
+        vault_file = self.make_vault_file_name(file.name)
         variables = GLOBALS
         variables['env'] = self.env
         variables['lookup'] = self.lookup
         # This is the template variable
         contents = Environment().from_string(
-            source=open(file).read(), globals=variables
+            source=file.read(), globals=variables
         ).render()
 
         if os.path.isfile(vault_file):

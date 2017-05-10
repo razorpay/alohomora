@@ -40,7 +40,7 @@ def store(region, env, secret, key, app):
               help='environment for the application, used for namespacing')
 @click.argument('file', type=click.File('rb'))
 @cli.command('cast', short_help='Render a ansible jinja template file')
-def cast():
+def cast(env, app, region, file):
     spell = Alohomora(env, app, region)
     click.echo(spell.cast(file))
 
