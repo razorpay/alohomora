@@ -55,8 +55,6 @@ will do the following:
    updated, and their keys only.
 4. Overwrite the file with the new one if *everything looks cool*.
 
-This project uses poet for managing dependencies.
-
 Configuration?
 --------------
 
