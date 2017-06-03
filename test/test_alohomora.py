@@ -34,3 +34,8 @@ class TestAlohomora(object):
         assert 'prod' == spell.canonical_env('prod-birdie')
         assert 'beta' == spell.canonical_env('beta-birdie')
         assert 'beta' == spell.canonical_env('beta')
+
+    def test_store(self):
+        spell = Alohomora('prod', 'birdie', mock=True)
+        config = spell.store('test_key', 'test_secret')
+        assert 'test_key stored' == config.get('default', 'msg')

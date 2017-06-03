@@ -44,5 +44,6 @@ def cast(env, app, region, file):
     spell = Alohomora(env, app, region)
     click.echo(spell.cast(file))
 
+
 if __name__ == '__main__':
     cli()
