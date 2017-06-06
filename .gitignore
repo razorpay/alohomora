@@ -87,6 +87,11 @@ celerybeat-schedule
 venv/
 ENV/
 
+# virtualenv - macOS
+bin/**
+include/**
+pip-selfcheck.json
+
 # Spyder project settings
 .spyderproject
 .spyproject
