@@ -27,6 +27,15 @@ class TestAlohomora(object):
         assert 'fake_db_password' == config.get('default', 'DB_PASSWORD')
         assert 'fake_secret' == config.get('default', 'APP_SECRET')
 
+    def test_lookup_failure(self):
+        spell = Alohomora('prod', 'birdie', mock=True)
+        try:
+            spell.cast(file('test/files/birdie_fail.j2'))
+            assert(False)
+        except Exception as e:
+            assert(e.message == 'Lookup Failed: app_key_non_existent')
+            raise
+
     def test_canonical(self):
         spell = Alohomora('prod', 'birdie', mock=True)
         assert 'prod' == spell.canonical_env('Production')
