@@ -3,6 +3,7 @@ from razorpay.alohomora import Alohomora
 import ConfigParser
 import StringIO
 from io import open
+import pytest
 
 
 class TestAlohomora(object):
@@ -29,12 +30,9 @@ class TestAlohomora(object):
 
     def test_lookup_failure(self):
         spell = Alohomora('prod', 'birdie', mock=True)
-        try:
+        with pytest.raises(Exception,
+                           message='Lookup failed: app_key_non_existent'):
             spell.cast(file('test/files/birdie_fail.j2'))
-            assert(False)
-        except Exception as e:
-            assert(e.message == 'Lookup Failed: app_key_non_existent')
-            raise
 
     def test_canonical(self):
         spell = Alohomora('prod', 'birdie', mock=True)
