@@ -97,7 +97,7 @@ class Alohomora(object):
         if key in self.secrets:
             return self.secrets[key]
         else:
-            raise Exception('Lookup failed')
+            raise Exception('Lookup failed: ' + key)
 
     def cast(self, file):
         vault_file = self.make_vault_file_name(file.name)
