@@ -58,22 +58,9 @@ will do the following:
 Configuration?
 --------------
 
-Alohomora is designed to be a zero-config solution. That makes sense,
-because you are supposed to use alohomora to fetch the actual
-configuration.
+Alohomora is designed to be a zero-config solution.
 
-Alohomora is coupled (as of now) with AWS-CodeDeploy and assumes the
-existence of the following environment variables:
-
-+---------------------------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------+------------------------------------------------------------------------+
-| Name                      | Description                                                                                                                                                          | Value                                                                  |
-+===========================+======================================================================================================================================================================+========================================================================+
-| APPLICATION\_NAME         | This variable contains the name of the application being deployed. This is the name the user sets in the console or AWS CLI.                                         | This is passed to the template and elsewhere as the ``app`` variable   |
-+---------------------------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------+------------------------------------------------------------------------+
-| DEPLOYMENT\_GROUP\_NAME   | This variable contains the name of the deployment group. A deployment group is a set of instances associated with an application that you target for a deployment.   | This is expected to be the same as the environment name.               |
-+---------------------------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------+------------------------------------------------------------------------+
-
-We perform a few transforms:
+We perform a few transforms on the arguments that are passed:
 
 -  Change both ``app`` and ``env`` to lowercase
 -  Replace ``production`` with ``prod`` in the ``env`` name
