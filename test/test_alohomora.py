@@ -1,7 +1,10 @@
 from __future__ import absolute_import
 from razorpay.alohomora import Alohomora
-import ConfigParser
-import StringIO
+try:
+    import configparser
+except ImportError:
+    import ConfigParser as configparser
+import io
 from io import open
 import pytest
 
@@ -10,13 +13,13 @@ class TestAlohomora(object):
     """Alohomora cast and other tests"""
 
     def cast_and_read(self, spell):
-        spell.cast(file('test/files/birdie.j2'))
+        spell.cast(open('test/files/birdie.j2'))
 
         ini_contents = open('test/files/birdie').read()
         string_config = '[default]\n' + ini_contents
 
-        config = ConfigParser.ConfigParser(allow_no_value=True)
-        config.readfp(StringIO.StringIO(string_config))
+        config = configparser.ConfigParser(allow_no_value=True)
+        config.readfp(io.StringIO(string_config))
 
         return config
 
@@ -32,7 +35,7 @@ class TestAlohomora(object):
         spell = Alohomora('prod', 'birdie', mock=True)
         with pytest.raises(Exception,
                            message='Lookup failed: app_key_non_existent'):
-            spell.cast(file('test/files/birdie_fail.j2'))
+            spell.cast(open('test/files/birdie_fail.j2'))
 
     def test_canonical(self):
         spell = Alohomora('prod', 'birdie', mock=True)
