@@ -97,3 +97,4 @@ ENV/
 # mkdocs documentation
 /site
 test/files/birdie
+test/files/birdie2

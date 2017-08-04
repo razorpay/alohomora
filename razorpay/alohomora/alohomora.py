@@ -99,27 +99,39 @@ class Alohomora(object):
         else:
             raise Exception('Lookup failed: ' + key)
 
-    def cast(self, file):
+    def __cast_one_file(self, file, context):
         vault_file = self.make_vault_file_name(file.name)
-        variables = GLOBALS
-        variables['env'] = self.env
-        variables['lookup'] = self.lookup
+
+        contents = str(file.read())
+
         # This is the template variable
         contents = Environment().from_string(
-            source=file.read(), globals=variables
+            source=contents, globals=context
         ).render()
 
         if os.path.isfile(vault_file):
             """TODO: The file exists, we will output diff"""
             msg = vault_file + " updated"
-            pass
         else:
             msg = vault_file + " created"
 
         with open(vault_file, 'w') as f:
             f.write(contents)
 
-        return(msg)
+        return msg
+
+    def cast(self, *files):
+
+        variables = GLOBALS
+        variables['env'] = self.env
+        variables['lookup'] = self.lookup
+
+        msgs = []
+
+        for file in files:
+            msgs.append(self.__cast_one_file(file, variables))
+
+        return msgs
 
     def make_vault_file_name(self, file):
         if file[-3:] != '.j2':

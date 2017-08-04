@@ -12,10 +12,8 @@ import pytest
 class TestAlohomora(object):
     """Alohomora cast and other tests"""
 
-    def cast_and_read(self, spell):
-        spell.cast(open('test/files/birdie.j2'))
-
-        ini_contents = open('test/files/birdie').read()
+    def read_generated_config(self, file):
+        ini_contents = open('test/files/' + file).read()
         string_config = '[default]\n' + ini_contents
 
         config = configparser.ConfigParser(allow_no_value=True)
@@ -23,9 +21,21 @@ class TestAlohomora(object):
 
         return config
 
+    def cast_and_read(self, spell):
+        spell.cast(open('test/files/birdie.j2'))
+
+        return self.read_generated_config('birdie')
+
     def test_multi_target_cast(self):
         spell = Alohomora('prod', 'birdie', mock=True)
-        spell.cast(open('test/files/birdie.j2'), open('test/files/birdie2.j2'))
+        res = spell.cast(open('test/files/birdie.j2'),
+                         open('test/files/birdie2.j2'))
+
+        config1 = self.read_generated_config('birdie')
+        config2 = self.read_generated_config('birdie2')
+
+        assert 'fake_app_key' == config1.get('default', 'APP_KEY')
+        assert 'fake_app_key' == config2.get('default', 'APP_KEY')
 
     def test_lookup(self):
         spell = Alohomora('prod', 'birdie', mock=True)
