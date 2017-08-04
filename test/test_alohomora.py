@@ -23,6 +23,10 @@ class TestAlohomora(object):
 
         return config
 
+    def test_multi_target_cast(self):
+        spell = Alohomora('prod', 'birdie', mock=True)
+        spell.cast(open('test/files/birdie.j2'), open('test/files/birdie2.j2'))
+
     def test_lookup(self):
         spell = Alohomora('prod', 'birdie', mock=True)
         config = self.cast_and_read(spell)
