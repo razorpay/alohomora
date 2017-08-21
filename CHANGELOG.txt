@@ -7,6 +7,14 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+## [0.4.0] - 2017-08-21
+
+### Added
+- Adds multi-target casting. You can pass multiple files to be rendered in a single command now
+
+### Fixed
+- Compatibilty issues with Python 3
+
 ## [0.3.0] - 2017-07-17
 
 ### Added
