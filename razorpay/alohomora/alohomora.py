@@ -139,5 +139,5 @@ class Alohomora(object):
 
         return file[0:-3]
 
-    def render(self, file):
-        return self.cast(file)
+    def render(self, *files):
+        return self.cast(*files)
