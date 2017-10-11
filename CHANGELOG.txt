@@ -7,6 +7,11 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+## [0.4.1] - 2017-10-11
+
+### Fixed
+- Pinned versions of all dependencies in setup.py in response to [credstash#175](https://github.com/fugue/credstash/issues/175)
+
 ## [0.4.0] - 2017-08-21
 
 ### Added
