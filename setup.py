@@ -16,10 +16,11 @@ setup(name='razorpay.alohomora',
       long_description=readme(),
       packages=['razorpay', 'razorpay.alohomora'],
       install_requires=[
-          'credstash',
-          'click',
-          'jinja2',
-          'botocore'
+          'credstash==1.13.3',
+          'cryptography==2.0.3',
+          'click==6.7',
+          'jinja2==2.9.6',
+          'botocore==1.7.26'
       ],
       entry_points={
           'console_scripts': [
