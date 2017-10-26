@@ -13,6 +13,10 @@ import os
 
 class TestAlohomora(object):
 
+    '''
+        Picked up from
+        https://stackoverflow.com/a/34333710/368328
+    '''
     @contextlib.contextmanager
     def modified_environ(self, *remove, **update):
         """
