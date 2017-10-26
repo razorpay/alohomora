@@ -24,7 +24,7 @@ We don't do our own crypto. We rely on these libraries instead:
 
 -  https://github.com/fugue/credstash
 
-This is how the template file [STRIKEOUT:looks] will look in our app
+This is how the template file looks in our app
 repository:
 
 .. code:: j2
@@ -51,12 +51,14 @@ must be configured by you. Once you try to render a template, alohomora
 will do the following:
 
 1. Read the entire table and decrypt all secrets and cache them locally.
-2. Render the template with these files and 2 extra variables: ``env``,
-   and ``app`` variables.
+2. Render the template with these files and 3 extra variables: ``env``,
+   ``app``, and ``ENV`` variables.
 3. Generate a diff report with any secrets that have been updated, and
    send it to a log file. The report should contain number of secrets
    updated, and their keys only.
 4. Overwrite the file with the new one if *everything looks cool*.
+
+``ENV`` is same as `os.environ` inside the jinja template.
 
 Configuration?
 --------------

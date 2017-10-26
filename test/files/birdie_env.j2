@@ -11,4 +11,4 @@ DB_HOST          = prod-common.db.website.vpc
 DB_PASSWORD      = {{ lookup('db_password')  }}
 APP_SECRET       = {{ lookup('secret')  }}
 {% endif %}
-env_test         = {{ env['README'] }}
+env_test         = {{ ENV['README'] }}
