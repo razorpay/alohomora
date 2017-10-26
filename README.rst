@@ -31,6 +31,9 @@ repository:
 
     # {{ alohomora_managed }}
     DB_PASSWORD      = {{ lookup('db_password') }}
+    APP_ENV          = {{ env }}
+    ENV_DEBUG        = {{ ENV['DEBUG'] }}
+    APP_NAME         = {{ app }}
 
 This repo runs directly on the same template and generates the
 equivalent file as the output.
@@ -53,10 +56,6 @@ will do the following:
 1. Read the entire table and decrypt all secrets and cache them locally.
 2. Render the template with these files and 3 extra variables: ``env``,
    ``app``, and ``ENV`` variables.
-3. Generate a diff report with any secrets that have been updated, and
-   send it to a log file. The report should contain number of secrets
-   updated, and their keys only.
-4. Overwrite the file with the new one if *everything looks cool*.
 
 ``ENV`` is same as `os.environ` inside the jinja template.
 
