@@ -6,6 +6,7 @@ import credstash
 import click
 import botocore.exceptions
 import os.path
+from os import environ
 import re
 from io import open
 
@@ -124,6 +125,7 @@ class Alohomora(object):
 
         variables = GLOBALS
         variables['env'] = self.env
+        variables['ENV'] = os.environ
         variables['lookup'] = self.lookup
 
         msgs = []

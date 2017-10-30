@@ -7,9 +7,45 @@ except ImportError:
 import io
 from io import open
 import pytest
+import contextlib
+import os
 
 
 class TestAlohomora(object):
+
+    '''
+        Picked up from
+        https://stackoverflow.com/a/34333710/368328
+    '''
+    @contextlib.contextmanager
+    def modified_environ(self, *remove, **update):
+        """
+        Temporarily updates the ``os.environ`` dictionary in-place.
+
+        The ``os.environ`` dictionary is updated in-place so that the modification
+        is sure to work in all situations.
+
+        :param remove: Environment variables to remove.
+        :param update: Dictionary of environment variables and values to add/update.
+        """
+        env = os.environ
+        update = update or {}
+        remove = remove or []
+
+        # List of environment variables being updated or removed.
+        stomped = (set(update.keys()) | set(remove)) & set(env.keys())
+        # Environment variables and values to restore on exit.
+        update_after = {k: env[k] for k in stomped}
+        # Environment variables and values to remove on exit.
+        remove_after = frozenset(k for k in update if k not in env)
+
+        try:
+            env.update(update)
+            [env.pop(k, None) for k in remove]
+            yield
+        finally:
+            env.update(update_after)
+            [env.pop(k) for k in remove_after]
     """Alohomora cast and other tests"""
 
     def read_generated_config(self, file):
@@ -58,3 +94,11 @@ class TestAlohomora(object):
         assert 'prod' == spell.canonical_env('prod-birdie')
         assert 'beta' == spell.canonical_env('beta-birdie')
         assert 'beta' == spell.canonical_env('beta')
+
+    def test_environment(self):
+        with self.modified_environ(README='VALUE'):
+            spell = Alohomora('prod', 'birdie', mock=True)
+            spell.cast(open('test/files/birdie_env.j2'))
+
+            conf = self.read_generated_config('birdie_env')
+            assert 'VALUE' == conf.get('default', 'ENV_TEST')
