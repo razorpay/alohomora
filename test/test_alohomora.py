@@ -83,9 +83,10 @@ class TestAlohomora(object):
 
     def test_lookup_failure(self):
         spell = Alohomora('prod', 'birdie', mock=True)
-        with pytest.raises(Exception,
-                           message='Lookup failed: app_key_non_existent'):
+        msg = 'Lookup failed: app_key_non_existent'
+        with pytest.raises(Exception) as excinfo:
             spell.cast(open('test/files/birdie_fail.j2'))
+        assert excinfo.value.args[0] == msg
 
     def test_canonical(self):
         spell = Alohomora('prod', 'birdie', mock=True)
@@ -94,6 +95,14 @@ class TestAlohomora(object):
         assert 'prod' == spell.canonical_env('prod-birdie')
         assert 'beta' == spell.canonical_env('beta-birdie')
         assert 'beta' == spell.canonical_env('beta')
+
+    def test_multi_lookup_failure(self):
+        spell = Alohomora('prod', 'birdie', mock=True)
+        msg = 'Lookup failed: app_key_non_existent, app_fake_key'
+        with pytest.raises(Exception,
+                           message=msg) as excinfo:
+            spell.cast(open('test/files/birdie_fail_multiple.j2'))
+        assert excinfo.value.args[0] == msg
 
     def test_environment(self):
         with self.modified_environ(README='VALUE'):
