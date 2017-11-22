@@ -20,7 +20,7 @@ setup(name='razorpay.alohomora',
           'cryptography==2.0.3',
           'click==6.7',
           'jinja2==2.9.6',
-          'botocore==1.7.26'
+          'botocore>1.7'
       ],
       entry_points={
           'console_scripts': [
