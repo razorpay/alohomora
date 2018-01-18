@@ -1,7 +1,6 @@
 vendor/
 environment/env.ini
 .coverprofile
-Godeps/
 example/
 alohomora
 python/
