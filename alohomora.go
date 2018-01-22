@@ -6,6 +6,7 @@ import (
 	"time"
 
 	"gopkg.in/urfave/cli.v1"
+	"github.com/razorpay/alohomora/cmd"
 )
 
 func main() {
@@ -33,14 +34,14 @@ func main() {
       Value: "ap-south-1",
       EnvVar: "AWS_REGION",
       Usage: "`AWS_REGION` for unicreds datastore",
-      Destination: &flag_region,
+      Destination: &flagRegion,
     },
 		cli.StringFlag{
       Name: "env, E",
       Value: "prod",
       EnvVar: "APP_ENV,APP_MODE",
       Usage: "Application `env`, used for namespacing",
-      Destination: &flag_env,
+      Destination: &flagEnv,
     },
 	}
 
@@ -50,11 +51,19 @@ func main() {
 			Usage:     "Render a comma separated list of golang template files",
       ArgsUsage: "[APP] [FILES,...]",
       Before: func(c *cli.Context) error {
-        fmt.Println("Casting: ", c.Args()[1], "For app: ", c.Args()[0])
+				region := flagRegion
+				env := flagEnv
+				app := c.Args()[0];
+				files := c.Args()[1];
+        fmt.Println("Casting: ", files, "For app: ", app)
         return nil
       },
 			Action: func(c *cli.Context) error {
-				fmt.Println("Rendered: ", c.Args().First())
+				region := flagRegion
+				env := flagEnv
+				app := c.Args()[0];
+				files := c.Args()[1];
+				cmd.Cast(region, env, app, files)
 				return nil
 			},
 		},
