@@ -105,7 +105,6 @@ class TestAlohomora(unittest.TestCase):
         vault_file = 'tests/files/env.birdie.vault'
         config = self.cast_and_read(spell, filename=vault_file)
         assert os.path.isfile('tests/files/env.birdie.vault')
-        os.remove(vault_file)
         assert 'fake_secret' == config.get('default', 'APP_SECRET')
 
     def test_lookup_failure(self):
