@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+## [0.4.3] - 2018-04-16
+
+- Adds support for `--output` in the cast command. Only works with single files.
+
 ## [0.4.2] - 2017-11-22
 
 - Removes `requirements.txt` from the distribution to avoid conflicts from new boto3 release
