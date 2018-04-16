@@ -9,9 +9,10 @@ from io import open
 import pytest
 import contextlib
 import os
+import unittest
 
 
-class TestAlohomora(object):
+class TestAlohomora(unittest.TestCase):
 
     '''
         Picked up from
@@ -48,8 +49,25 @@ class TestAlohomora(object):
             [env.pop(k) for k in remove_after]
     """Alohomora cast and other tests"""
 
-    def read_generated_config(self, file):
-        ini_contents = open('test/files/' + file).read()
+    def tearDown(self):
+        files = [
+            'tests/files/birdie',
+            'tests/files/birdie_env',
+            'tests/files/birdie2',
+            'tests/files/env.birdie.vault',
+        ]
+
+        for test_file in files:
+            if os.path.isfile(test_file):
+                os.remove(test_file)
+
+    def read_generated_config(self, file, filename=None):
+        if filename:
+            vault_file = filename
+            ini_contents = open(vault_file).read()
+        else:
+            vault_file = file
+            ini_contents = open('tests/files/' + vault_file).read()
         string_config = '[default]\n' + ini_contents
 
         config = configparser.ConfigParser(allow_no_value=True)
@@ -57,15 +75,16 @@ class TestAlohomora(object):
 
         return config
 
-    def cast_and_read(self, spell):
-        spell.cast(open('test/files/birdie.j2'))
+    def cast_and_read(self, spell, filename=None):
+        fd = open('tests/files/birdie.j2')
+        spell.cast(fd, filename=filename)
 
-        return self.read_generated_config('birdie')
+        return self.read_generated_config('birdie', filename=filename)
 
     def test_multi_target_cast(self):
         spell = Alohomora('prod', 'birdie', mock=True)
-        res = spell.cast(open('test/files/birdie.j2'),
-                         open('test/files/birdie2.j2'))
+        res = spell.cast(open('tests/files/birdie.j2'),
+                         open('tests/files/birdie2.j2'))
 
         config1 = self.read_generated_config('birdie')
         config2 = self.read_generated_config('birdie2')
@@ -81,11 +100,19 @@ class TestAlohomora(object):
         assert 'fake_db_password' == config.get('default', 'DB_PASSWORD')
         assert 'fake_secret' == config.get('default', 'APP_SECRET')
 
+    def test_output_file_name(self):
+        spell = Alohomora('prod', 'birdie', mock=True)
+        vault_file = 'tests/files/env.birdie.vault'
+        config = self.cast_and_read(spell, filename=vault_file)
+        assert os.path.isfile('tests/files/env.birdie.vault')
+        os.remove(vault_file)
+        assert 'fake_secret' == config.get('default', 'APP_SECRET')
+
     def test_lookup_failure(self):
         spell = Alohomora('prod', 'birdie', mock=True)
         with pytest.raises(Exception,
                            message='Lookup failed: app_key_non_existent'):
-            spell.cast(open('test/files/birdie_fail.j2'))
+            spell.cast(open('tests/files/birdie_fail.j2'))
 
     def test_canonical(self):
         spell = Alohomora('prod', 'birdie', mock=True)
@@ -98,7 +125,7 @@ class TestAlohomora(object):
     def test_environment(self):
         with self.modified_environ(README='VALUE'):
             spell = Alohomora('prod', 'birdie', mock=True)
-            spell.cast(open('test/files/birdie_env.j2'))
+            spell.cast(open('tests/files/birdie_env.j2'))
 
             conf = self.read_generated_config('birdie_env')
             assert 'VALUE' == conf.get('default', 'ENV_TEST')
