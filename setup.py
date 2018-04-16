@@ -20,11 +20,11 @@ setup(
     long_description=readme(),
     packages=find_packages(exclude=('tests')),
     install_requires=[
-        'credstash==1.13.3',
+        'credstash==1.14.0',
         'cryptography==2.0.3',
         'click==6.7',
         'jinja2==2.9.6',
-        'botocore>1.7'
+        'botocore==1.10.4'
     ],
     entry_points={
         'console_scripts': [
