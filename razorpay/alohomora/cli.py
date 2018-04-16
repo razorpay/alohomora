@@ -38,12 +38,15 @@ def store(region, env, secret, key, app):
 @click.option('--app', help='application name, used for table name as well')
 @click.option('--env', default='prod',
               help='environment for the application, used for namespacing')
+@click.option('--output', default=None,
+              help='Output file name of the vault file')
 @click.argument('files', type=click.File('rb'), nargs=-1)
 @cli.command('cast', short_help='Render a ansible jinja template file')
-def cast(env, app, region, files):
+def cast(app, env, region, output, files):
     spell = Alohomora(env, app, region)
-    for msg in spell.cast(*files):
+    for msg in spell.cast(*files, filename=output):
         click.echo(msg)
+
 
 if __name__ == '__main__':
     cli()

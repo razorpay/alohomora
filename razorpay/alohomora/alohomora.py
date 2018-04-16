@@ -5,8 +5,7 @@ import json
 import credstash
 import click
 import botocore.exceptions
-import os.path
-from os import environ
+import os
 import re
 from io import open
 
@@ -101,8 +100,13 @@ class Alohomora(object):
         else:
             self.failed_lookups.append(key)
 
-    def __cast_one_file(self, file, context):
-        vault_file = self.make_vault_file_name(file.name)
+    def __cast_one_file(self, file, context, filename=None):
+        self.validate_j2(file.name)
+
+        if filename:
+            vault_file = filename
+        else:
+            vault_file = file.name[0:-3]
 
         contents = str(file.read())
 
@@ -128,7 +132,10 @@ class Alohomora(object):
 
         return msg
 
-    def cast(self, *files):
+    def cast(self, *files, **kwargs):
+        filename = kwargs.get('filename')
+        if len(files) > 2 and filename:
+            raise Exception('Output name given for multiple files')
 
         variables = GLOBALS
         variables['env'] = self.env
@@ -137,16 +144,20 @@ class Alohomora(object):
 
         msgs = []
 
-        for file in files:
-            msgs.append(self.__cast_one_file(file, variables))
+        # If a single j2 file is given and an output name,
+        # Cast the j2 file with that output file name
+        if len(files) == 1 and filename:
+            file = files[0]
+            msgs.append(self.__cast_one_file(file, variables, filename=filename))
+        else:
+            for file in files:
+                msgs.append(self.__cast_one_file(file, variables))
 
         return msgs
 
-    def make_vault_file_name(self, file):
+    def validate_j2(self, file):
         if file[-3:] != '.j2':
             raise Exception('File must be a valid j2 template')
-
-        return file[0:-3]
 
     def render(self, *files):
         return self.cast(*files)

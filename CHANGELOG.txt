@@ -6,6 +6,15 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
+
+## [0.4.3] - 2018-04-16
+
+- Adds support for `--output` in the cast command. Only works with single files.
+
+## [0.4.2] - 2017-11-22
+
+- Removes `requirements.txt` from the distribution to avoid conflicts from new boto3 release
+- Relaxes `botocore` requirement
 - Adds support for environment variables via `{{ENV['lookup']}}`. [#19](https://github.com/razorpay/alohomora/pull/19)
 
 ## [0.4.1] - 2017-10-11
