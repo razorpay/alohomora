@@ -127,7 +127,7 @@ class TestAlohomora(unittest.TestCase):
         msg = 'Lookup failed: app_key_non_existent, app_fake_key'
         with pytest.raises(Exception,
                            message=msg) as excinfo:
-            spell.cast(open('test/files/birdie_fail_multiple.j2'))
+            spell.cast(open('tests/files/birdie_fail_multiple.j2'))
         assert excinfo.value.args[0] == msg
 
     def test_environment(self):
