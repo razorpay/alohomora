@@ -24,6 +24,7 @@ wheels/
 *.egg-info/
 .installed.cfg
 *.egg
+.pytest_cache/
 
 # PyInstaller
 #  Usually these files are written by a python script from a template
@@ -96,6 +97,8 @@ ENV/
 
 # mkdocs documentation
 /site
+
+# Generated files
 test/files/birdie
 test/files/birdie2
 test/files/birdie_env
