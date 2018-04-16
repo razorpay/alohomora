@@ -44,6 +44,7 @@ class Alohomora(object):
     def __init__(self, env, app, region=credstash.DEFAULT_REGION, mock=False):
         self.env = self.canonical_env(env)
         self.app = self.canonical_app(app)
+        self.failed_lookups = []
         if mock:
             self.stash = MockStash()
         else:
@@ -98,17 +99,23 @@ class Alohomora(object):
         if key in self.secrets:
             return self.secrets[key]
         else:
-            raise Exception('Lookup failed: ' + key)
+            self.failed_lookups.append(key)
 
     def __cast_one_file(self, file, context):
         vault_file = self.make_vault_file_name(file.name)
 
         contents = str(file.read())
 
+        # re-initialize the failed_lookups
+        self.failed_lookups = []
         # This is the template variable
         contents = Environment().from_string(
             source=contents, globals=context
         ).render()
+
+        if self.failed_lookups:
+            msg = "Lookup failed: {}".format(", ".join(self.failed_lookups))
+            raise Exception(msg)
 
         if os.path.isfile(vault_file):
             """TODO: The file exists, we will output diff"""
