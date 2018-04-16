@@ -5,6 +5,7 @@ def readme():
     with open('README.rst') as f:
         return f.read()
 
+
 setup(
     name='razorpay.alohomora',
     version='0.4.3',
@@ -12,8 +13,7 @@ setup(
     url='http://github.com/razorpay/alohomora',
     author='Team Razorpay',
     author_email='developers@razorpay.com',
-    setup_requires=['pytest-runner'],
-    tests_require=['pytest'],
+    tests_require=['pytest', 'pytest-runner'],
     test_suite='tests',
     keywords=["credstash", "ansible", "secrets", "jinja"],
     license='MIT',
