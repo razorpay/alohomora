@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+## [0.4.7] - 2019-06-19
+
+- Accepts mock flag in listSecrets method for skipping credstash call
+
 ## [0.4.6] - 2019-01-08
 
 - Updates credstash to 1.15

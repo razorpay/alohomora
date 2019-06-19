@@ -102,3 +102,6 @@ ENV/
 test/files/birdie
 test/files/birdie2
 test/files/birdie_env
+
+# IDE
+.idea/
