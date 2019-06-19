@@ -22,7 +22,7 @@ class MockStash(object):
         return {
             'alohomora_app_key': 'fake_app_key',
             'alohomora_db_password': 'fake_db_password',
-            'alohomora_secret': 'fake_secret'
+            'alohomora_app_secret': 'fake_secret',
         }
 
 

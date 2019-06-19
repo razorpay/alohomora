@@ -124,7 +124,7 @@ class TestAlohomora(unittest.TestCase):
 
     def test_multi_lookup_failure(self):
         spell = Alohomora('prod', 'birdie', mock=True)
-        msg = 'Lookup failed: app_key_non_existent, app_fake_key'
+        msg = 'Lookup failed: alohomora_app_key_non_existent, alohomora_app_fake_key'
         with pytest.raises(Exception,
                            message=msg) as excinfo:
             spell.cast(open('tests/files/birdie_fail_multiple.j2'))
