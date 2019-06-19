@@ -20,9 +20,9 @@ class MockStash(object):
     def listSecrets(self, table='credential-store',
                     region=credstash.DEFAULT_REGION):
         return {
-            'app_key': 'fake_app_key',
-            'db_password': 'fake_db_password',
-            'secret': 'fake_secret'
+            'alohomora_app_key': 'fake_app_key',
+            'alohomora_db_password': 'fake_db_password',
+            'alohomora_secret': 'fake_secret'
         }
 
 

@@ -42,11 +42,17 @@ def store(region, env, secret, key, app):
               help='Output file name of the vault file')
 @click.option('--mock', default=False,
               help='To mock all calls to credstash.')
-
 @click.argument('files', type=click.File('rb'), nargs=-1)
 @cli.command('cast', short_help='Render a ansible jinja template file')
 def cast(app, env, region, output, files, mock):
-    spell = Alohomora(env, app, region, mock=mock)
+    is_mock = False
+
+    if isinstance(mock, bool):
+        is_mock = mock
+    elif isinstance(mock, basestring) and mock.lower() == "true":
+        is_mock = True
+
+    spell = Alohomora(env, app, region, mock=is_mock)
     for msg in spell.cast(*files, filename=output):
         click.echo(msg)
 
