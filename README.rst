@@ -28,7 +28,7 @@ We don't do our own crypto. We rely on these libraries instead:
 This is how the template file looks in our app
 repository:
 
-.. code:: j2
+.. code::
 
     # {{ alohomora_managed }}
     DB_PASSWORD      = {{ lookup('db_password') }}

@@ -8,7 +8,7 @@ def readme():
 
 setup(
     name='razorpay.alohomora',
-    version='0.4.6',
+    version='0.4.7',
     description='Secret distribution tool, written as a wrapper on credstash',
     url='http://github.com/razorpay/alohomora',
     author='Team Razorpay',
@@ -18,6 +18,7 @@ setup(
     keywords=["credstash", "ansible", "secrets", "jinja"],
     license='MIT',
     long_description=readme(),
+    long_description_content_type='text/x-rst',
     packages=find_packages(exclude=('tests')),
     install_requires=[
         'credstash==1.15.0',
