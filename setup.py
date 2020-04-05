@@ -21,7 +21,7 @@ setup(
     long_description_content_type='text/x-rst',
     packages=find_packages(exclude=('tests')),
     install_requires=[
-        'credstash==1.16.1',
+        'credstash==1.17.0',
         'click>=6.7',
         'jinja2>=2.9.6',
     ],
