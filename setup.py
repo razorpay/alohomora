@@ -19,6 +19,7 @@ setup(
     long_description=readme(),
     long_description_content_type='text/x-rst',
     packages=find_packages(exclude=('tests')),
+    python_requires='>=3.7.0',
     install_requires=[
         'credstash==1.17.1',
         'click>=8.1',
