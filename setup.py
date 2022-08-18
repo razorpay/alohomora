@@ -22,7 +22,7 @@ setup(
     install_requires=[
         'credstash==1.17.1',
         'click>=8.1',
-        'jinja2>=3.1.2',
+        'jinja2>=3.0',
     ],
     entry_points={
         'console_scripts': [
