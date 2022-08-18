@@ -9,7 +9,7 @@ setup(
     name='razorpay.alohomora',
     version='0.5.0',
     description='Secret distribution tool, written as a wrapper on credstash',
-    url='http://github.com/razorpay/alohomora',
+    url='https://github.com/razorpay/alohomora',
     author='Team Razorpay',
     author_email='developers@razorpay.com',
     tests_require=['pytest', 'pytest-runner'],
