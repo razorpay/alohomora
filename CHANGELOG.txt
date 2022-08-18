@@ -7,6 +7,12 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+## [0.5.0] - 2022-08-18
+
+- Drops support for Python 3.6 and below
+- Dependency upgrades
+- Upgrades Jinja usage to fix a rare bug in some templates
+
 ## [0.4.7] - 2019-06-19
 
 - Accepts mock flag in listSecrets method for skipping credstash call
