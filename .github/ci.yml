@@ -1,0 +1,22 @@
+name: Tests
+on: [ push ]
+jobs:
+  tests:
+    runs-on: ubuntu-latest # nosemgrep : semgrep.dev/s/swati31196:github_provided_runner
+    name: Tests
+    # Only supported versions are supported: https://endoflife.date/python
+    # But tests are run on more.
+    matrix:
+      python: ["2.7", "3.5", "3.6", "3.7", "3.8", "3.9", "3.10"]
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-python@v4
+        with:
+          python-version: ${{matrix.python}}
+      - name: Install Dependencies
+        run: |
+          pip install -U setuptools pip
+          python setup.py clean --all
+          python setup.py install
+      - name: Run Tests
+        run: python setup.py test
