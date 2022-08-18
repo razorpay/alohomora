@@ -1,6 +1,7 @@
 # {{ alohomora_managed }}
 ENV={{env}}
-{% if env == 'beta' %}
+# The quotes in next statement are for a test on a bug
+""{% if env == 'beta' %}
 APP_KEY          = {{ lookup('alohomora_app_key') }}
 DB_HOST          = beta.db.website.vpc
 DB_PASSWORD      = {{ lookup('alohomora_db_password') }}

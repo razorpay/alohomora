@@ -1,6 +1,6 @@
 from __future__ import with_statement
 from __future__ import absolute_import
-from jinja2 import Environment, select_autoescape
+from jinja2 import Template
 import json
 import credstash
 import click
@@ -108,14 +108,14 @@ class Alohomora(object):
         else:
             vault_file = file.name[0:-3]
 
-        contents = str(file.read())
+        contents = file.read()
 
         # re-initialize the failed_lookups
         self.failed_lookups = []
         # This is the template variable
-        contents = Environment().from_string(
-            source=contents, globals=context
-        ).render()
+        t = Template(contents)
+        t.globals=context
+        contents = t.render()
 
         if self.failed_lookups:
             msg = "Lookup failed: {}".format(", ".join(self.failed_lookups))

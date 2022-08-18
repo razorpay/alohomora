@@ -42,7 +42,7 @@ def store(region, env, secret, key, app):
               help='Output file name of the vault file')
 @click.option('--mock', default=False,
               help='To mock all calls to credstash.')
-@click.argument('files', type=click.File('rb'), nargs=-1)
+@click.argument('files', type=click.File('r', encoding='utf-8'), nargs=-1)
 @cli.command('cast', short_help='Render a ansible jinja template file')
 def cast(app, env, region, output, files, mock):
     is_mock = False
