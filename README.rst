@@ -1,8 +1,8 @@
 alohomora
 =========
 
-.. image:: https://travis-ci.com/razorpay/alohomora.svg?token=qzqszeBhnN4z5pes5mg9&branch=master
-    :target: https://travis-ci.com/razorpay/alohomora
+.. image:: https://github.com/razorpay/alohomora/actions/workflows/ci.yml/badge.svg
+    :target: https://github.com/razorpay/alohomora/actions/workflows/ci.yml
 
 Razorpay's Secret Credential management system.
 

@@ -5,12 +5,11 @@ def readme():
     with open('README.rst') as f:
         return f.read()
 
-
 setup(
     name='razorpay.alohomora',
-    version='0.4.7',
+    version='0.5.0',
     description='Secret distribution tool, written as a wrapper on credstash',
-    url='http://github.com/razorpay/alohomora',
+    url='https://github.com/razorpay/alohomora',
     author='Team Razorpay',
     author_email='developers@razorpay.com',
     tests_require=['pytest', 'pytest-runner'],
@@ -20,10 +19,11 @@ setup(
     long_description=readme(),
     long_description_content_type='text/x-rst',
     packages=find_packages(exclude=('tests')),
+    python_requires='>=3.7.0',
     install_requires=[
-        'credstash==1.16.1',
-        'click>=6.7',
-        'jinja2>=2.9.6',
+        'credstash==1.17.1',
+        'click>=8.1',
+        'jinja2>=3.0',
     ],
     entry_points={
         'console_scripts': [

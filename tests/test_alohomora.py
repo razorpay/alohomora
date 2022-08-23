@@ -64,27 +64,29 @@ class TestAlohomora(unittest.TestCase):
     def read_generated_config(self, file, filename=None):
         if filename:
             vault_file = filename
-            ini_contents = open(vault_file).read()
+            f = open(vault_file)
         else:
             vault_file = file
-            ini_contents = open('tests/files/' + vault_file).read()
-        string_config = '[default]\n' + ini_contents
+            f = open('tests/files/' + vault_file)
+        string_config = '[default]\n' + f.read()
+        f.close()
 
         config = configparser.ConfigParser(allow_no_value=True)
-        config.readfp(io.StringIO(string_config))
+        config.read_file(io.StringIO(string_config))
 
         return config
 
     def cast_and_read(self, spell, filename=None):
         fd = open('tests/files/birdie.j2')
         spell.cast(fd, filename=filename)
+        fd.close()
 
         return self.read_generated_config('birdie', filename=filename)
 
     def test_multi_target_cast(self):
         spell = Alohomora('prod', 'birdie', mock=True)
-        res = spell.cast(open('tests/files/birdie.j2'),
-                         open('tests/files/birdie2.j2'))
+        with open('tests/files/birdie.j2') as f1, open('tests/files/birdie2.j2') as f2:
+            res = spell.cast(f1,f2)
 
         config1 = self.read_generated_config('birdie')
         config2 = self.read_generated_config('birdie2')
@@ -109,10 +111,11 @@ class TestAlohomora(unittest.TestCase):
 
     def test_lookup_failure(self):
         spell = Alohomora('prod', 'birdie', mock=True)
-        msg = 'Lookup failed: app_key_non_existent'
+        msg = r'Lookup failed: alohomora_app_key_non_existent'
         with pytest.raises(Exception,
-                           message=msg):
-            spell.cast(open('tests/files/birdie_fail.j2'))
+                           match=msg):
+            with open('tests/files/birdie_fail.j2') as f:
+                spell.cast(f)
 
     def test_canonical(self):
         spell = Alohomora('prod', 'birdie', mock=True)
@@ -124,16 +127,18 @@ class TestAlohomora(unittest.TestCase):
 
     def test_multi_lookup_failure(self):
         spell = Alohomora('prod', 'birdie', mock=True)
-        msg = 'Lookup failed: alohomora_app_key_non_existent, alohomora_app_fake_key'
+        msg = r'Lookup failed: alohomora_app_key_non_existent, alohomora_app_fake_key'
         with pytest.raises(Exception,
-                           message=msg) as excinfo:
-            spell.cast(open('tests/files/birdie_fail_multiple.j2'))
+                           match=msg) as excinfo:
+            with open('tests/files/birdie_fail_multiple.j2') as f:
+                spell.cast(f)
         assert excinfo.value.args[0] == msg
 
     def test_environment(self):
         with self.modified_environ(README='VALUE'):
             spell = Alohomora('prod', 'birdie', mock=True)
-            spell.cast(open('tests/files/birdie_env.j2'))
+            with open('tests/files/birdie_env.j2') as f:
+                spell.cast(f)
 
             conf = self.read_generated_config('birdie_env')
             assert 'VALUE' == conf.get('default', 'ENV_TEST')
