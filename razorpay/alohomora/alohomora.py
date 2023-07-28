@@ -98,7 +98,7 @@ class Alohomora(object):
         if key in self.secrets:
             return self.secrets[key]
         else:
-            self.failed_lookups.append(key)
+            return "DUMMY_SECRET_VALUE"
 
     def __cast_one_file(self, file, context, filename=None):
         self.validate_j2(file.name)

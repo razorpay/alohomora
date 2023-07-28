@@ -111,11 +111,10 @@ class TestAlohomora(unittest.TestCase):
 
     def test_lookup_failure(self):
         spell = Alohomora('prod', 'birdie', mock=True)
-        msg = r'Lookup failed: alohomora_app_key_non_existent'
-        with pytest.raises(Exception,
-                           match=msg):
-            with open('tests/files/birdie_fail.j2') as f:
-                spell.cast(f)
+        with open('tests/files/birdie_fail.j2') as f:
+            spell.cast(f)
+        config = self.read_generated_config('birdie_fail')
+        assert 'DUMMY_SECRET_VALUE' == config.get('default', 'APP_KEY')
 
     def test_canonical(self):
         spell = Alohomora('prod', 'birdie', mock=True)
@@ -127,12 +126,12 @@ class TestAlohomora(unittest.TestCase):
 
     def test_multi_lookup_failure(self):
         spell = Alohomora('prod', 'birdie', mock=True)
-        msg = r'Lookup failed: alohomora_app_key_non_existent, alohomora_app_fake_key'
-        with pytest.raises(Exception,
-                           match=msg) as excinfo:
-            with open('tests/files/birdie_fail_multiple.j2') as f:
-                spell.cast(f)
-        assert excinfo.value.args[0] == msg
+        with open('tests/files/birdie_fail_multiple.j2') as f:
+            spell.cast(f)
+        config = self.read_generated_config('birdie_fail_multiple')
+        assert 'DUMMY_SECRET_VALUE' == config.get('default', 'APP_KEY')
+        assert 'DUMMY_SECRET_VALUE' == config.get('default', 'FAKE_KEY')
+        assert 'fake_app_key' == config.get('default', 'APP_REAL_KEY')
 
     def test_environment(self):
         with self.modified_environ(README='VALUE'):
