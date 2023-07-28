@@ -99,10 +99,6 @@ class Alohomora(object):
             return self.secrets[key]
         else:
             return "DUMMY_SECRET_VALUE"
-            ## If the lookup fails, we are returning a dummy value instead of adding in failed_lookup list
-            ##This is to avoid the exception being thrown if the list is not empty.
-            ## If the list is not empty, __cast_one_file function throws exception which will fail deployments.
-            ##self.failed_lookups.append(key)
 
     def __cast_one_file(self, file, context, filename=None):
         self.validate_j2(file.name)
